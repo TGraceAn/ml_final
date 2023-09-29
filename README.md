@@ -22,3 +22,6 @@ Get lists of train, validate, test
 ```shell
 python3 make_data_list.py -v speech_commands_v0.02/validation_list.txt -t speech_commands_v0.02/testing_list.txt -d speech_commands_v0.02 -o speech_commands_v0.02/_generated
 ```
+
+#TODO:
+Get dataloader --> load data as spectrogram into the nn (just use simple rnn) (train with noise if can)
