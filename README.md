@@ -23,6 +23,11 @@ Get lists of train, validate, test
 python3 make_data_list.py -v speech_commands_v0.02/validation_list.txt -t speech_commands_v0.02/testing_list.txt -d speech_commands_v0.02 -o speech_commands_v0.02/_generated
 ```
 
+To train
+```bash
+python3 train.py --conf KWT_configs/kwt1_baseline_config.yaml
+```
+
 #TODO:
 Get dataloader --> load data as spectrogram into the nn (just use simple rnn or cnn) (train with noise if can --> Using LabelSmoothingLoss --> A regularization technique)
 
