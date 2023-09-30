@@ -36,7 +36,8 @@ def train_single_batch(net: nn.Module, data: torch.Tensor, targets: torch.Tensor
     return loss.item(), correct.item()
 
 
-    def evaluate(net: nn.Module, criterion: Callable, dataloader: DataLoader, device: torch.device) -> Tuple[float, float]:
+@torch.no_grad()
+def evaluate(net: nn.Module, criterion: Callable, dataloader: DataLoader, device: torch.device) -> Tuple[float, float]:
     """Performs inference.
 
     Args:
