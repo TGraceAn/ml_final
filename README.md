@@ -23,5 +23,9 @@ Get lists of train, validate, test
 python3 make_data_list.py -v speech_commands_v0.02/validation_list.txt -t speech_commands_v0.02/testing_list.txt -d speech_commands_v0.02 -o speech_commands_v0.02/_generated
 ```
 
-#TODO:
-Get dataloader --> load data as spectrogram into the nn (just use simple rnn) (train with noise if can)
+The custom dataset is designed specifically for loading Google Speech Commands V2 because it automatically infers labels from folder name. Load it by running:
+```python
+training_data = TrainingAudio("path/to/dataset/root")
+train_dataloader = DataLoader(training_data, batch_size=1, shuffle=False)
+```
+Iterating ```training_dataloader``` will return a set of waveforms, sample rates and labels.

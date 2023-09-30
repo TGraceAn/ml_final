@@ -5,6 +5,10 @@ import os
 
 class TrainingAudio(Dataset):
     def __init__(self, dir_path: str):
+        """
+        Initialize the dataset
+        :param dir_path: path to Google Speech Commands V2 dataset
+        """
         self.label_list: list[str] = []
         self.file_list: list[str] = []
 
