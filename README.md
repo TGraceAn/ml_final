@@ -25,7 +25,7 @@ python3 make_data_list.py -v speech_commands_v0.02/validation_list.txt -t speech
 
 To train
 ```bash
-python3 train.py --conf KWT_configs/kwt1_baseline_config.yaml
+python3 train.py --conf KWT_configs/kwt1_baseline_mean_config.yaml
 ```
 
 #TODO:
