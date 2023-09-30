@@ -8,11 +8,11 @@ test_list_file: speech_commands_v0.02/_generated/testing_list.txt
 label_map: speech_commands_v0.02/_generated/label_map.json
 
 exp:
-    wandb: False
-    wandb_api_key:
+    wandb: True
+    wandb_api_key: 
     proj_name: ml_mid
     exp_dir: ./runs
-    exp_name: kwt1_baseline_mean
+    exp_name: kwt1_baseline
     device: auto
     log_freq: 20    # log every l_f steps
     log_to_file: True
@@ -20,8 +20,8 @@ exp:
     val_freq: 5    # validate every v_f epochs
     n_workers: 1
     pin_memory: True
-    cache: 0 # 0 -> no cache | 1 -> cache wavs | 2 -> cache specs; stops wav augments
-
+    cache: 2 # 0 -> no cache | 1 -> cache wavs | 2 -> cache specs; stops wav augments
+    
 
 hparams:
     seed: 0
@@ -30,37 +30,32 @@ hparams:
     l_smooth: 0.1
 
     audio:
-        sr: 16000 #sample
-        n_mfcc: 40
-        kwargs:
-            n_mels: 40
-            n_fft: 480
-            win_length: 480
-            hop_length: 160
-            center: False
-            fmax: 7600
-            fmin: 20
-
+        sr: 16000
+        n_mels: 40
+        n_fft: 480
+        win_length: 480
+        hop_length: 160
+        center: False
+    
     model:
-        name: # if name is provided below settings will be ignored during model creation
+        name: kwt-1 # if name is provided below settings will be ignored during model creation
         input_res: [40, 98]
         patch_res: [40, 1]
         num_classes: 35
-        mlp_dim: 256 #number of mlp
+        mlp_dim: 256
         dim: 64
         heads: 1
         depth: 12
         dropout: 0.0
         emb_dropout: 0.1
         pre_norm: False
-        pool: mean
 
     optimizer:
         opt_type: adamw
         opt_kwargs:
-          lr: 0.001 #learning rate
-          weight_decay: 0.1 #use for regularization
-
+          lr: 0.001
+          weight_decay: 0.1
+    
     scheduler:
         n_warmup: 10
         max_epochs: 140
@@ -70,13 +65,13 @@ hparams:
             #resample:
             #r_min: 0.85
             #r_max: 1.15
-
+        
             #time_shift:
             #s_min: -0.1
             #s_max: 0.1
 
             #bg_noise:
-            #bg_folder: speech_commands_v0.02/_background_noise_/
+            #bg_folder: speech_commands_v0.02/_generated/_background_noise_/
 
         spec_aug:
             n_time_masks: 2
