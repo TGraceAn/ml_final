@@ -28,6 +28,8 @@ To train
 python3 train.py --conf KWT_configs/kwt1_baseline_mean_config.yaml
 ```
 
+To run inference make sure to put the dataset (inference_file) into gsc folder with the inference_list in the right path and run it as test files just like in train data
+
 #TODO:
 Get dataloader --> load data as spectrogram into the nn (just use simple rnn or cnn) (train with noise if can --> Using LabelSmoothingLoss --> A regularization technique)
 
