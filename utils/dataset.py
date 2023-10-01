@@ -73,6 +73,8 @@ def get_train_val_test_split(root: str, val_file: str, test_file: str):
     return train_list, val_list, test_list, label_map
 
 
+
+
 class GoogleSpeechDataset(Dataset):
     """Dataset wrapper for Google Speech Commands V2."""
 
@@ -84,11 +86,15 @@ class GoogleSpeechDataset(Dataset):
         self.aug_settings = aug_settings
         self.cache = cache
 
+
+
         if cache:
             print("Caching dataset into memory.")
             self.data_list = init_cache(data_list, audio_settings["sr"], cache, audio_settings)
         else:
             self.data_list = data_list
+
+
 
         # labels: if no label map is provided, will not load labels. (Use for inference)
         if label_map is not None:
@@ -99,12 +105,16 @@ class GoogleSpeechDataset(Dataset):
         else:
             self.label_list = None
 
+
+
         if aug_settings is not None and "bg_noise" in self.aug_settings:
             self.bg_adder = AddBackgroundNoise(sounds_path=aug_settings["bg_noise"]["bg_folder"])
 
     def __len__(self):
         return len(self.data_list)
 
+
+#get spectrogram of audio
     def __getitem__(self, idx):
         if self.cache:
             x = self.data_list[idx]
@@ -139,27 +149,34 @@ class GoogleSpeechDataset(Dataset):
             if self.aug_settings is not None:
                 if "bg_noise" in self.aug_settings:
                     x = self.bg_adder(samples=x, sample_rate=sr)
-
+###################
+                # This isn't being used in this project
                 if "time_shift" in self.aug_settings:
                     x = time_shift(x, sr, **self.aug_settings["time_shift"])
 
+                # This isn't being used in this project
                 if "resample" in self.aug_settings:
                     x, _ = resample(x, sr, **self.aug_settings["resample"])
+###################
 
             x = librosa.util.fix_length(x, sr)
 
             ###################
-            # Spectrogram
+            # Spectrogram / MFCC
             ###################
 
             x = librosa.feature.melspectrogram(y=x, **self.audio_settings)
             x = librosa.feature.mfcc(S=librosa.power_to_db(x), n_mfcc=self.audio_settings["n_mels"])
 
+###################
+        # This isn't being used in this project
         if self.aug_settings is not None and "spec_aug" in self.aug_settings:
             x = spec_augment(x, **self.aug_settings["spec_aug"])
+###################
 
         x = torch.from_numpy(x).float().unsqueeze(0)
         return x
+
 
 
 def cache_item_loader(path: str, sr: int, cache_level: int, audio_settings: dict) -> np.ndarray:

@@ -1,4 +1,6 @@
 """KWT model based on model from https://github.com/ID56/Torch-KWT/blob/main/models/kwt.py"""
+#Using MFCC for feature extraction on spectrogram (looks like spectrogram --> looks like images)
+
 
 from einops import rearrange, repeat
 from einops.layers.torch import Rearrange

@@ -2,6 +2,7 @@ import numpy as np
 import numba as nb
 import librosa
 
+#Use for data augmentation but isn't used in this project
 
 @nb.jit(nopython=True, cache=True)
 def time_shift(wav: np.ndarray, sr: int, s_min: float, s_max: float) -> np.ndarray:

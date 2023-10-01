@@ -1,4 +1,5 @@
 """Miscellaneous helper functions."""
+#print out setting, save model and stuffs
 
 import torch
 from torch import nn, optim

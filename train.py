@@ -40,35 +40,35 @@ def training_pipeline(config):
     #####################################
 
     # data
-    with open(config["train_list_file"], "r") as f:
+    with open(config["train_list_file"], "r") as f: #get train data
         train_list = f.read().rstrip().split("\n")
     
     with open(config["val_list_file"], "r") as f:
         val_list = f.read().rstrip().split("\n")
 
-    trainloader = get_loader(train_list, config, train=True)
+    trainloader = get_loader(train_list, config, train=True) #load train data into memory
     valloader = get_loader(val_list, config, train=False)
 
     # model
     model = get_model(config["hparams"]["model"])
     ####
     if args.ckpt:
-        ckpt = torch.load(args.ckpt, map_location="cpu")
+        ckpt = torch.load(args.ckpt, map_location="cpu") #get checkpoint to continue training if want --> no checkpoint by default
         model.load_state_dict(ckpt["model_state_dict"])
         print(f"Loaded checkpoint {args.ckpt}.")
     model = model.to(config["hparams"]["device"])
-    print(f"Created model with {count_params(model)} parameters.")
+    print(f"Created model with {count_params(model)} parameters.") #print number of parameters in model
 
     # loss
     if config["hparams"]["l_smooth"]:
-        criterion = LabelSmoothingLoss(num_classes=config["hparams"]["model"]["num_classes"], smoothing=config["hparams"]["l_smooth"])
+        criterion = LabelSmoothingLoss(num_classes=config["hparams"]["model"]["num_classes"], smoothing=config["hparams"]["l_smooth"]) #Label smoothing loss implement CrossEntropyLoss (cost function)
     else:
-        criterion = nn.CrossEntropyLoss()
+        criterion = nn.CrossEntropyLoss() #Cross entropy loss (cost function)
 
     # optimizer
-    optimizer = get_optimizer(model, config["hparams"]["optimizer"])
+    optimizer = get_optimizer(model, config["hparams"]["optimizer"]) #Adam optimizer
     
-    # lr scheduler
+    # lr scheduler (learning rate scheduler)
     schedulers = {
         "warmup": None,
         "scheduler": None
@@ -87,7 +87,7 @@ def training_pipeline(config):
     #####################################
 
     print("Initiating training.")
-    train(model, optimizer, criterion, trainloader, valloader, schedulers, config)
+    train(model, optimizer, criterion, trainloader, valloader, schedulers, config) #train model
 
     #####################################
     # Final Test
@@ -131,6 +131,8 @@ def main(args):
     if args.id:
         config["exp"]["exp_name"] = config["exp"]["exp_name"] + args.id
 
+    
+    # wandb logging, optional
     if config["exp"]["wandb"]:
         if config["exp"]["wandb_api_key"] is not None:
             with open(config["exp"]["wandb_api_key"], "r") as f:
