@@ -1,10 +1,14 @@
+import torch
+
 from CustomAudioDataset import TrainingAudio
-from torch.utils.data import DataLoader
+from models.KWT import KWT
+from utils.trainer import *
 
-training_data = TrainingAudio("data")
-train_dataloader = DataLoader(training_data, batch_size=1, shuffle=False)
+# training_data = TrainingAudio("data")
+# train_dataloader = DataLoader(training_data, batch_size=1, shuffle=False)
 
-for waveform, sample_rate, label in train_dataloader:
-    print(waveform.shape)
-    print(sample_rate)
-    print(label)
+# model = KWT()
+# model.load_state_dict(torch.load("runs/kwt1_baseline/best.pth"))
+# model.eval()
+
+print(torch.load("runs/kwt1_baseline/best.pth"))
