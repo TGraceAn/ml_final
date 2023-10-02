@@ -4,8 +4,6 @@ Lol, sorry for the wrong naming thinging, we'll be using this for our midterm pr
 
 Using Google Speech Command (GSC) as our dataset, we want to train so that the model recognise words (just some words from GSC)
 
-This is based on HolgerBovbjerg/data2vec-KWS (we just want to pass our presentation)
-
 We're using the GSC split: 80% train, 10% validate, 10% test
 
 The necessary Python packages to run the code is installed by running:
@@ -39,3 +37,9 @@ training_data = TrainingAudio("path/to/dataset/root")
 train_dataloader = DataLoader(training_data, batch_size=1, shuffle=False)
 ```
 Iterating ```training_dataloader``` will return a set of waveforms, sample rates and labels.
+
+
+
+
+
+This is based on HolgerBovbjerg/data2vec-KWS (we just want to pass our presentation)
