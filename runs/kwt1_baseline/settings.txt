@@ -1,4 +1,4 @@
-data_root: speech_commands_v0.02/
+data_root: inference_file
 exp:
   cache: 2
   device: &id001 !!python/object/apply:torch.device
@@ -10,10 +10,10 @@ exp:
   log_to_stdout: true
   n_workers: 1
   pin_memory: true
-  proj_name: ml_mid
-  save_dir: ./runs/kwt1_baseline
+  proj_name: kms
+  save_dir: ./runs\kwt1_baseline
   val_freq: 5
-  wandb: false
+  wandb: true
   wandb_api_key: null
 hparams:
   audio:
@@ -42,11 +42,12 @@ hparams:
     - 40
     - 98
     mlp_dim: 256
-    name: kwt-1
+    name: null
     num_classes: 35
     patch_res:
     - 40
     - 1
+    pool: mean
     pre_norm: false
   n_epochs: 140
   optimizer:
@@ -58,8 +59,6 @@ hparams:
     max_epochs: 140
     n_warmup: 10
     scheduler_type: cosine_annealing
-  seed: 0
-label_map: speech_commands_v0.02/_generated/label_map.json
-test_list_file: speech_commands_v0.02/_generated/testing_list.txt
-train_list_file: speech_commands_v0.02/_generated/training_list.txt
-val_list_file: speech_commands_v0.02/_generated/validation_list.txt
+  seed: 100
+inference_list_file: inference_file/inference_list.txt
+label_map: null
