@@ -9,7 +9,7 @@ label_map: speech_commands_v0.02/_generated/label_map.json
 
 exp:
     wandb: False
-    wandb_api_key: 
+    wandb_api_key:
     proj_name: ml_mid
     exp_dir: ./runs
     exp_name: kwt1_baseline
@@ -21,13 +21,13 @@ exp:
     n_workers: 1
     pin_memory: True
     cache: 2 # 0 -> no cache | 1 -> cache wavs | 2 -> cache specs; stops wav augments
-    
+
 
 hparams:
     seed: 0
     batch_size: 512
     n_epochs: 140
-    l_smooth: 0.1
+    l_smooth: 0.1 #label smoothing for regularization
 
     audio:
         sr: 16000
@@ -36,9 +36,11 @@ hparams:
         win_length: 480
         hop_length: 160
         center: False
-    
+
     model:
         name: kwt-1 # if name is provided below settings will be ignored during model creation
+        # since it's called here, the kwt-1 in models/KWT.py will be called
+
         input_res: [40, 98]
         patch_res: [40, 1]
         num_classes: 35
@@ -55,17 +57,18 @@ hparams:
         opt_kwargs:
           lr: 0.001
           weight_decay: 0.1
-    
+
     scheduler:
         n_warmup: 10
         max_epochs: 140
         scheduler_type: cosine_annealing
 
+#augmentation isn't implemented
     augment:
             #resample:
             #r_min: 0.85
             #r_max: 1.15
-        
+
             #time_shift:
             #s_min: -0.1
             #s_max: 0.1
